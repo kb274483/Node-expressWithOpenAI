@@ -2,14 +2,23 @@ require("dotenv").config();
 const OpenAI = require('openai');
 const express = require("express");
 const cors = require("cors");
-const axios = require('axios');
-const fs = require('fs').promises;
-const { Configuration, OpenAIApi } = require("openai");
-const imagePath = './cat.jpeg'
 
 const app = express();
 app.use(express.json({ limit: '20mb' }));
-app.use(cors());
+
+// 設置 CORS
+const allowedOrigins = ['https://calm-tor-97039-f2b947cbd8e8.herokuapp.com/'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
