@@ -7,15 +7,9 @@ const app = express();
 app.use(express.json({ limit: '20mb' }));
 
 // 設置 CORS
-const allowedOrigins = ['https://calm-tor-97039-f2b947cbd8e8.herokuapp.com/#/'];
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'https://calm-tor-97039-f2b947cbd8e8.herokuapp.com',
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
