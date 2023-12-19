@@ -24,6 +24,10 @@ const openai = new OpenAI({
 });
 const port = process.env.PORT || 5000;
 
+app.get('/test', (req, res) => {
+  res.send('Hello TEST');
+});
+
 // 根據收到的圖片，生成圖片的描述文字
 app.post("/analyze_images", async (req, res) => {
   try {
