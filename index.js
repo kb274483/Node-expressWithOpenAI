@@ -18,12 +18,12 @@ const openai = new OpenAI({
 });
 const port = process.env.PORT || 5000;
 
-app.get('/test', (req, res) => {
+app.get('/node_ai/test', (req, res) => {
   res.send('Hello TEST');
 });
 
 // 根據收到的圖片，生成圖片的描述文字
-app.post("/analyze_images", async (req, res) => {
+app.post("/node_ai/analyze_images", async (req, res) => {
   try {
     base64Image = req.body.imgBase64;
     const payload = {
@@ -58,7 +58,7 @@ app.post("/analyze_images", async (req, res) => {
 });
 
 // 根據 prompt 生成圖片
-app.post("/create_images", async (req, res) => {
+app.post("/node_ai/create_images", async (req, res) => {
   const promptMsg = req.body.prompt;
   try {
     if (promptMsg == null) {
