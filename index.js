@@ -18,10 +18,6 @@ const openai = new OpenAI({
 });
 const port = process.env.PORT || 5000;
 
-app.get('/node_ai/test', (req, res) => {
-  res.send('Hello TEST');
-});
-
 // 根據收到的圖片，生成圖片的描述文字
 app.post("/node_ai/analyze_images", async (req, res) => {
   try {
@@ -76,6 +72,20 @@ app.post("/node_ai/create_images", async (req, res) => {
     const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
     const base64Image = Buffer.from(imageResponse.data, 'binary').toString('base64');
 
+    return res.status(200).json({
+      success: true,
+      result: base64Image,
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.post("/node_ai/download_images", async (req, res) => {
+  const imgUrl = req.body.url;
+  try {
+    const imageResponse = await axios.get(imgUrl, { responseType: 'arraybuffer' });
+    const base64Image = Buffer.from(imageResponse.data, 'binary').toString('base64');
     return res.status(200).json({
       success: true,
       result: base64Image,
