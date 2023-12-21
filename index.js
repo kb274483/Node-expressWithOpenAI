@@ -91,4 +91,7 @@ app.post("/node_ai/download_images", async (req, res) => {
   }
 });
 
-app.listen(port, () => console.log(`Server is running on port ${port}!!`));
+app.listen(port, () =>{
+  server.timeout = 300000;
+  console.log(`Server is running on port ${port}!!`)
+});
