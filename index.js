@@ -81,21 +81,15 @@ app.post("/node_ai/create_images", async (req, res) => {
 
 app.post("/node_ai/download_images", async (req, res) => {
   const imgUrl = req.body.url;
-  const blockSize = 1024 * 1024;
+
   try {
     const imageResponse = await axios.get(imgUrl, { responseType: 'arraybuffer' });
-    const imageData = imageResponse.data;
-    let base64Image = '';
+    const base64Image = Buffer.from(imageResponse.data, 'binary').toString('base64');
 
-    for (let i = 0; i < imageData.length; i += blockSize) {
-      const chunk = imageData.slice(i, i + blockSize);
-      base64Image += Buffer.from(chunk, 'binary').toString('base64');
-    }
+    const blob = Buffer.from(base64Image, 'base64');
+    res.setHeader('Content-Type', 'application/octet-stream');
+    res.send(blob);
 
-    return res.status(200).json({
-      success: true,
-      result: base64Image,
-    });
   } catch (error) {
     res.status(500).json({
       success: false,
