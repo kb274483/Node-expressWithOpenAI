@@ -68,13 +68,9 @@ app.post("/node_ai/create_images", async (req, res) => {
       n : 1,
     })
 
-    const imageUrl = response.data[0].url;
-    const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-    const base64Image = Buffer.from(imageResponse.data, 'binary').toString('base64');
-
     return res.status(200).json({
       success: true,
-      result: base64Image,
+      result: response.data[0].url,
     });
   } catch (error) {
     console.log(error.message);
